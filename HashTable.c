@@ -3,14 +3,14 @@
  * @socials: https://twitter.com/SKrish_K
  * @contact: ksuresh3141@gmail.com
  * 
- * @brief: A hashtable implentation
+ * @brief: A very short hashtable implentation. Probably not ideal for applications.
 */
 
 #include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
 
-#define TABLE_SIZE 5
+#define TABLE_SIZE 7
 
 typedef struct
 {
@@ -66,6 +66,19 @@ bool hash_table_insert(HashTable * p)
     return true;
 }
 
+HashTable * hash_delete(char *name)
+{
+    int index = hash(name);
+    if(hash_table[index] != NULL &&
+        strncmp(hash_table[index] -> name, name, TABLE_SIZE) == 0){
+            HashTable *t1 = hash_table[index];
+            hash_table[index] = NULL;
+            return t1;
+        } else {
+            return NULL;
+        }
+}
+
 HashTable * hash_lookup(char *name)
 {
     int index = hash(name);
@@ -108,6 +121,12 @@ int main(void)
     } else {
         printf("Found %s\n", t1 -> name);
     }
+    
+    t1 = hash_delete("Joshua");
+    print_table();
+
+    hash_table_insert(&april);
+    print_table();
     
     
     return 0;
